@@ -1,0 +1,1 @@
+/home/akshat/.oh-my-zsh/CODE_OF_CONDUCT.md
