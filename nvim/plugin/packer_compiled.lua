@@ -175,6 +175,11 @@ _G.packer_plugins = {
     path = "/home/akshat/.local/share/nvim/site/pack/packer/start/toggleterm.nvim",
     url = "https://github.com/akinsho/toggleterm.nvim"
   },
+  ["transparent.nvim"] = {
+    loaded = true,
+    path = "/home/akshat/.local/share/nvim/site/pack/packer/start/transparent.nvim",
+    url = "https://github.com/xiyaowong/transparent.nvim"
+  },
   ["vim-vsnip"] = {
     loaded = true,
     path = "/home/akshat/.local/share/nvim/site/pack/packer/start/vim-vsnip",
