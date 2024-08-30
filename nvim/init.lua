@@ -1,1 +1,0 @@
-/home/akshat/.config/nvim/init.lua
