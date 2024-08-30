@@ -44,6 +44,9 @@ use {
     branch = "harpoon2",
     requires = { {"nvim-lua/plenary.nvim"} }
 }
+use {"akinsho/toggleterm.nvim", tag = '*', config = function()
+  require("toggleterm").setup()
+end}
 end)
 
 
@@ -246,3 +249,22 @@ vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
 -- Toggle previous & next buffers stored within Harpoon list
 vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
 vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
+
+require("toggleterm").setup{
+  size = 20,
+  open_mapping = [[<c-\>]],  -- Customize the key mapping for opening the terminal
+  shade_terminals = true,    -- Enable shading for terminals
+  shading_factor = 2,        -- Degree of shading for the terminal
+  start_in_insert = true,    -- Start the terminal in insert mode
+  insert_mappings = true,    -- Apply open mapping in insert mode
+  terminal_mappings = true,  -- Apply open mapping in the opened terminals
+  persist_size = true,       -- Remember the terminal size when toggling
+  direction = "float",       -- Terminal opens in a floating window
+  close_on_exit = true,      -- Close terminal window when the process exits
+  shell = vim.o.shell,       -- Use the default shell
+  float_opts = {
+    border = "curved",       -- Border style for the floating terminal
+    winblend = 3,            -- Transparency of the floating window
+  },
+}
+
