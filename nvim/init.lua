@@ -9,6 +9,9 @@ vim.g.netrw_banner = 0       -- Remove the banner
 vim.g.netrw_liststyle = 3    -- Use tree style
 --vim.g.netrw_browse_split = 4 -- Open files in previous window
 vim.g.netrw_altv = 1         -- Open splits to the right
+if vim.fn.has("gui_running") == 1 then
+    vim.o.guifont = "Hack Nerd Font:h12"
+end
 -- Use packer.nvim to manage plugins
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
