@@ -1,292 +1,138 @@
--- Install packer.nvim if not installed
-vim.g.mapleader = ' '
-local install_path = vim.fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  vim.fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-  vim.cmd 'packadd packer.nvim'
-end
-vim.g.netrw_banner = 0       -- Remove the banner
-vim.g.netrw_liststyle = 3    -- Use tree style
---vim.g.netrw_browse_split = 4 -- Open files in previous window
-vim.g.netrw_altv = 1         -- Open splits to the right
-if vim.fn.has("gui_running") == 1 then
-    vim.o.guifont = "Hack Nerd Font:h12"
-end
--- Use packer.nvim to manage plugins
+-- Initialize packer.nvim for plugin management
 require('packer').startup(function(use)
+  -- Plugin Manager
   use 'wbthomason/packer.nvim'
-  use 'neovim/nvim-lspconfig'  -- LSP configurations
-  use 'nvim-treesitter/nvim-treesitter'  -- Tree-sitter for syntax highlighting
-  use 'nvim-treesitter/nvim-treesitter-textobjects'  -- Tree-sitter textobjects
-  use 'hrsh7th/nvim-cmp'  -- Autocompletion plugin
-  use 'hrsh7th/cmp-nvim-lsp'  -- LSP completion source for nvim-cmp
-  use 'hrsh7th/cmp-buffer'    -- Buffer completion source for nvim-cmp
-  use 'hrsh7th/cmp-path'      -- Path completion source for nvim-cmp
-  use 'hrsh7th/cmp-nvim-lua'  -- Lua completion source for nvim-cmp
- -- use 'hrsh7th/cmp-treesitter'  -- Treesitter completion source for nvim-cmp
-  use 'hrsh7th/cmp-vsnip'     -- Snippet support for nvim-cmp
-  use 'hrsh7th/vim-vsnip'     -- Vsnip snippets plugin
-  use 'hrsh7th/vim-vsnip-integ'  -- Integration between nvim-cmp and vim-vsnip
-  use 'nvim-lua/completion-nvim'  -- Additional completion enhancements
-  use 'ellisonleao/gruvbox.nvim' 
-  use 'nvim-telescope/telescope.nvim'
-  use 'nvim-lua/plenary.nvim'
-  use 'mfussenegger/nvim-dap'
-  use 'rcarriga/nvim-dap-ui'
-  use 'theHamsta/nvim-dap-virtual-text'
-  use 'nvim-telescope/telescope-dap.nvim'
-  use 'wakatime/vim-wakatime'
-  use 'xiyaowong/transparent.nvim'
-  --use 'rest-nvim/rest.nvim'
---  use 'kikito/xml2lua'       -- XML parsing
-  --use 'Lua-cURL/Lua-cURLv3'      -- cURL support
-  ---use 'MunifTanjim/nui.nvim' -- UI components for Neovim
-  --use 'L3MON4D3/LuaSnip'
-  -- Add other plugins as needed
-use {
-    "ThePrimeagen/harpoon",
-    branch = "harpoon2",
-    requires = { {"nvim-lua/plenary.nvim"} }
-}
-use {"akinsho/toggleterm.nvim", tag = '*', config = function()
-  require("toggleterm").setup()
-end}
+
+  -- Core Plugins
+  use 'neovim/nvim-lspconfig' -- LSP
+  use 'nvim-telescope/telescope.nvim' -- Telescope
+  use 'nvim-lua/plenary.nvim' -- Dependency for Telescope
+
+  -- Syntax Highlighting
+  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+
+  -- Completion Framework
+  use 'hrsh7th/nvim-cmp'
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-path'
+
+  -- Snippets
+  use 'L3MON4D3/LuaSnip'
+  use 'saadparwaiz1/cmp_luasnip'
+
+  -- Debugging Tools
+
+  -- UI Enhancements
+  use 'hoob3rt/lualine.nvim' -- Statusline
+
+  -- Git Integration
+  use 'lewis6991/gitsigns.nvim'
+
+  -- Navigation
+  use 'ThePrimeagen/harpoon'
+
+  -- Color Scheme
+  use 'gruvbox-community/gruvbox'
+
+  -- Utility Plugins
 end)
+-- Disable Netrw menu and related settings
+vim.g.netrw_banner = 0        -- Disable the Netrw banner
+vim.g.netrw_liststyle = 3     -- Use tree-style listing (remove default menu)
+vim.g.netrw_altv = 1          -- Open splits to the right when Netrw is opened
+vim.g.netrw_fastbrowse = 0    -- Disable fast browsing
+vim.g.netrw_winsize = 25      -- Set window size for Netrw
 
-
--- Example configuration to map 'jj' to '<Esc>'
 vim.api.nvim_set_keymap('i', 'jj', '<Esc>', { noremap = true, silent = true })
+vim.g.mapleader = ' '
+-- General Settings
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+vim.opt.termguicolors = true
 
--- LSP configuration
+-- LSP Configuration
 local lspconfig = require('lspconfig')
 local on_attach = function(client, bufnr)
-  -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  vim.diagnostic.config({ update_in_insert = true })
-  vim.diagnostic.open_float(0, { scope = 'line' })
-  -- Mappings.
-  local opts = { noremap=true, silent=true }
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<Cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  local opts = { noremap = true, silent = true }
+  local keymap = vim.api.nvim_buf_set_keymap
 
-  -- Set autocommands to ensure omnifunc is set correctly
-  vim.cmd [[
-    augroup LspAutocommands
-      autocmd! * <buffer>
-      autocmd BufEnter,InsertEnter <buffer> setlocal omnifunc=v:lua.vim.lsp.omnifunc
-    augroup END
-  ]]
+  -- LSP Keybindings
+  keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
 
-  -- Print a message to ensure the on_attach function is called
-  print('LSP attached to buffer ' .. bufnr)
+  -- Telescope Integration
+  vim.keymap.set('n', '<leader>gd', require('telescope.builtin').lsp_definitions, { buffer = bufnr })
+  vim.keymap.set('n', '<leader>gr', require('telescope.builtin').lsp_references, { buffer = bufnr })
 end
 
-local intelephense = {
-  cmd = {'intelephense', '--stdio'},
-  root_dir = lspconfig.util.root_pattern('composer.json', 'package.json'),
-  settings = {}
-}
-lspconfig.intelephense.setup(intelephense)
---Enable (broadcasting) snippet capability for completion
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+-- Enable LSP Servers
+lspconfig.tsserver.setup { on_attach = on_attach }
+lspconfig.pyright.setup { on_attach = on_attach }
 
-require'lspconfig'.html.setup {
-	filetypes = { "html", "htmx" },
-  capabilities = capabilities,
-}
--- Configure LSP servers
-lspconfig.tsserver.setup{
-  on_attach = on_attach,
-  capabilities = vim.lsp.protocol.make_client_capabilities()  -- optional capabilities
-}
-
-lspconfig.gopls.setup {
-  on_attach = on_attach,
-  flags = {
-    debounce_text_changes = 150,
-  },
-  settings = {
-    gopls = {
-      analyses = {
-        unusedparams = true,
-      },
-      staticcheck = true,
-    },
+-- Telescope Setup
+require('telescope').setup {
+  defaults = {
+    file_ignore_patterns = { "node_modules", ".git" },
   },
 }
 
--- Treesitter setup
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = {
-	  "go",
-    "python",           -- Python
-    "javascript",       -- JavaScript
-    "typescript",       -- TypeScript
-    "html",             -- HTML
-    "css",              -- CSS
-    "lua",              -- Lua
-    "tsx",
-    "cpp",
-    "json",
-    "graphql",
-    "lua",
-    "http",
-    "xml",
-    "yaml",
-    
-    
-    -- TSX (TypeScript JSX)
-  },
-  highlight = {
-    enable = true,      -- Enable Treesitter syntax highlighting
-  },
+-- Telescope Key Bindings
+vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { noremap = true, silent = true })
+
+-- Treesitter Setup
+require('nvim-treesitter.configs').setup {
+  ensure_installed = { "javascript", "typescript", "lua", "python" },
+  highlight = { enable = true },
 }
 
--- nvim-cmp setup
+-- Harpoon Setup
+local harpoon = require('harpoon')
+require('harpoon').setup()
+
+-- Harpoon Key Bindings
+vim.keymap.set('n', '<C-a>', require('harpoon.mark').add_file, { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>hm', require('harpoon.ui').toggle_quick_menu, { noremap = true, silent = true })
+vim.keymap.set('n', '<C-h>', function() require('harpoon.ui').nav_file(1) end, { noremap = true, silent = true })
+vim.keymap.set('n', '<C-j>', function() require('harpoon.ui').nav_file(2) end, { noremap = true, silent = true })
+vim.keymap.set('n', '<C-k>', function() require('harpoon.ui').nav_file(3) end, { noremap = true, silent = true })
+vim.keymap.set('n', '<C-l>', function() require('harpoon.ui').nav_file(4) end, { noremap = true, silent = true })
+
+-- Completion Configuration
 local cmp = require('cmp')
-
 cmp.setup({
   snippet = {
     expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body)  -- For `vim-vsnip` users.
+      require('luasnip').lsp_expand(args.body)
     end,
   },
-  mapping  = cmp.mapping.preset.insert({
-      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-o>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.abort(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    }),
+  mapping = {
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm { select = true },
+  },
   sources = {
-    { name = 'nvim_lsp' },     -- LSP as a source
-    { name = 'buffer' },       -- Buffers as a source
-    { name = 'path' },         -- File path completion
-    { name = 'nvim_lua' },     -- Neovim Lua API
-    { name = 'treesitter' },   -- Treesitter
+    { name = 'nvim_lsp' },
+    { name = 'buffer' },
+    { name = 'path' },
+    { name = 'luasnip' },
   },
 })
 
--- Default options:
-require("gruvbox").setup({
-  terminal_colors = true, -- add neovim terminal colors
-  undercurl = true,
-  underline = true,
-  bold = true,
-  italic = {
-    strings = true,
-    emphasis = true,
-    comments = true,
-    operators = false,
-    folds = true,
-  },
-  strikethrough = true,
-  invert_selection = false,
-  invert_signs = false,
-  invert_tabline = false,
-  invert_intend_guides = false,
-  inverse = true, -- invert background for search, diffs, statuslines and errors
-  contrast = "", -- can be "hard", "soft" or empty string
-  palette_overrides = {},
-  overrides = {},
-  dim_inactive = false,
-  transparent_mode = false,
-})
-vim.cmd("colorscheme gruvbox")
-local builtin = require('telescope.builtin')
+-- Debugging Setup
 
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
-require('telescope').setup{
-  defaults = {
-    -- Default configuration for telescope goes here:
-    -- config_key = value,
-    mappings = {
-      i = {
-        -- map actions.which_key to <C-h> (default: <C-/>)
-        -- actions.which_key shows the mappings for your picker,
-        -- e.g. git_{create, delete, ...}_branch for the git_branches picker
-        ["<C-h>"] = "which_key"
-      }
-    }
-  },
-  pickers = {
-    -- Default configuration for builtin pickers goes here:
-    -- picker_name = {
-    --   picker_config_key = value,
-    --   ...
-    -- }
-    -- Now the picker_config_key will be applied every time you call this
-    -- builtin picker
-  },
-  extensions = {
-    -- Your extension configuration goes here:
-    -- extension_name = {
-    --   extension_config_key = value,
-    -- }
-    -- please take a look at the readme of the extension you want to configure
-  }
-  }
+-- UI Enhancements
+require('lualine').setup { options = { theme = 'gruvbox' } }
 
-vim.opt.clipboard="unnamedplus"
---require("rest-nvim").setup()
-local harpoon = require("harpoon")
+-- Utility Plugins Setup
 
--- REQUIRED
-harpoon:setup()
--- REQUIRED
-
-vim.keymap.set("n", "<C-a>", function() harpoon:list():add() end)
-vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
-
-vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
-vim.keymap.set("n", "<C-j>", function() harpoon:list():select(2) end)
-vim.keymap.set("n", "<C-k>", function() harpoon:list():select(3) end)
-vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
-
--- Toggle previous & next buffers stored within Harpoon list
-vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
-vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
-
-require("toggleterm").setup{
-  size = 20,
-  open_mapping = [[<c-\>]],  -- Customize the key mapping for opening the terminal
-  shade_terminals = true,    -- Enable shading for terminals
-  shading_factor = 2,        -- Degree of shading for the terminal
-  start_in_insert = true,    -- Start the terminal in insert mode
-  insert_mappings = true,    -- Apply open mapping in insert mode
-  terminal_mappings = true,  -- Apply open mapping in the opened terminals
-  persist_size = true,       -- Remember the terminal size when toggling
-  direction = "float",       -- Terminal opens in a floating window
-  close_on_exit = true,      -- Close terminal window when the process exits
-  shell = vim.o.shell,       -- Use the default shell
-  float_opts = {
-    border = "curved",       -- Border style for the floating terminal
-    winblend = 3,            -- Transparency of the floating window
-  },
-}
- -- Optional, you don't have to run setup.
-require("transparent").setup({
-  -- table: default groups
-  groups = {
-    'Normal', 'NormalNC', 'Comment', 'Constant', 'Special', 'Identifier',
-    'Statement', 'PreProc', 'Type', 'Underlined', 'Todo', 'String', 'Function',
-    'Conditional', 'Repeat', 'Operator', 'Structure', 'LineNr', 'NonText',
-    'SignColumn', 'CursorLine', 'CursorLineNr', 'StatusLine', 'StatusLineNC',
-    'EndOfBuffer',
-  },
-  -- table: additional groups that should be cleared
-  extra_groups = {},
-  -- table: groups you don't want to clear
-  exclude_groups = {},
-  -- function: code to be executed after highlight groups are cleared
-  -- Also the user event "TransparentClear" will be triggered
-  on_clear = function() end,
-})
+-- Color Scheme
+vim.cmd [[colorscheme gruvbox]]
 
