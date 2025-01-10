@@ -36,7 +36,11 @@ require('packer').startup(function(use)
   use 'gruvbox-community/gruvbox'
 
   -- Utility Plugins
+  use 'akinsho/toggleterm.nvim'
+
 end)
+
+
 -- Disable Netrw menu and related settings
 vim.g.netrw_banner = 0        -- Disable the Netrw banner
 vim.g.netrw_liststyle = 3     -- Use tree-style listing (remove default menu)
@@ -46,6 +50,7 @@ vim.g.netrw_winsize = 25      -- Set window size for Netrw
 
 vim.api.nvim_set_keymap('i', 'jj', '<Esc>', { noremap = true, silent = true })
 vim.g.mapleader = ' '
+vim.api.nvim_set_keymap('n','ss',':Ex <CR>', { noremap = true, silent = true })
 -- General Settings
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.opt.termguicolors = true
@@ -69,10 +74,38 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>gr', require('telescope.builtin').lsp_references, { buffer = bufnr })
 end
 
+-- Toggleterm Configuration
+require("toggleterm").setup{
+        -- Optional settings, adjust as needed
+        size = 20,
+        open_mapping = [[<c-\>]],
+        direction = 'float',
+        shade_terminals = true,
+        highlights = {
+          border = "Normal",
+          background = "Normal",
+        }
+      }
+
 -- Enable LSP Servers
 lspconfig.tsserver.setup { on_attach = on_attach }
 lspconfig.pyright.setup { on_attach = on_attach }
-
+lspconfig.ccls.setup{
+  cmd = {"ccls"}, -- Path to the ccls executable
+  filetypes = {"c", "cpp", "objc", "objcpp"}, -- Supported file types
+  root_dir = lspconfig.util.root_pattern("compile_commands.json", ".ccls", ".git"),
+  init_options = {
+    cache = {
+      directory = ".ccls-cache" -- Cache directory
+    },
+    compilationDatabaseDirectory = "build", -- Directory for compile_commands.json
+    clang = {
+      extraArgs = {"-std=gnu11", "-Wall", "-Wextra", "-pedantic"}, -- Custom flags
+      excludeArgs = {"-frounding-math"} -- Exclude problematic flags
+    }
+  },
+  capabilities = require('cmp_nvim_lsp').default_capabilities() -- Optional: Enable autocompletion support if using nvim-cmp
+}
 -- Telescope Setup
 require('telescope').setup {
   defaults = {
@@ -88,7 +121,7 @@ vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { nore
 
 -- Treesitter Setup
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { "javascript", "typescript", "lua", "python" },
+  ensure_installed = { "javascript", "typescript", "lua", "python" ,"c"},
   highlight = { enable = true },
 }
 
@@ -113,6 +146,8 @@ cmp.setup({
     end,
   },
   mapping = {
+	['<Tab>'] = cmp.mapping.select_next_item(),
+    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
@@ -126,11 +161,33 @@ cmp.setup({
   },
 })
 
--- Debugging Setup
+require('gitsigns').setup()
 
 -- UI Enhancements
-require('lualine').setup { options = { theme = 'gruvbox' } }
-
+require('lualine').setup {
+ options = {
+    theme = 'gruvbox',  -- Choose your theme
+    icons_enabled = true,  -- Enable icons for a better look
+    section_separators = {'', ''},
+    component_separators = {'', ''},
+  },
+  sections = {
+    lualine_a = {'mode'},  -- Current mode (Normal, Insert, etc.)
+    lualine_b = {'branch', 
+                 'diff', 
+                 'diagnostics'},  -- Git branch, diff, and diagnostics
+    lualine_c = {'filename'},  -- File name
+    lualine_x = {'encoding', 'fileformat', 'filetype'},  -- Encoding, file format, and type
+    lualine_y = {'progress'},  -- Progress (line number/total lines)
+  },
+  inactive_sections = {
+    lualine_a = {'filename'},
+    lualine_b = {},
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = {},
+},
+}
 -- Utility Plugins Setup
 
 -- Color Scheme
