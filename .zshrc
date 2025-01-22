@@ -121,3 +121,4 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 export MANPAGER='nvim +Man!'
 export MANWIDTH=999
+export PATH=$PATH:/opt/zig
