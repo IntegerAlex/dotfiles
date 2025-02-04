@@ -99,6 +99,11 @@ _G.packer_plugins = {
     path = "/home/akshat/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
+  ["ef-themes.nvim"] = {
+    loaded = true,
+    path = "/home/akshat/.local/share/nvim/site/pack/packer/start/ef-themes.nvim",
+    url = "https://github.com/oonamo/ef-themes.nvim"
+  },
   ["gitsigns.nvim"] = {
     loaded = true,
     path = "/home/akshat/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
@@ -118,6 +123,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/akshat/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/hoob3rt/lualine.nvim"
+  },
+  ["markview.nvim"] = {
+    loaded = true,
+    path = "/home/akshat/.local/share/nvim/site/pack/packer/start/markview.nvim",
+    url = "https://github.com/OXY2DEV/markview.nvim"
   },
   ["nvim-cmp"] = {
     loaded = true,
@@ -153,6 +163,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/akshat/.local/share/nvim/site/pack/packer/start/toggleterm.nvim",
     url = "https://github.com/akinsho/toggleterm.nvim"
+  },
+  ["vim-eldar"] = {
+    loaded = true,
+    path = "/home/akshat/.local/share/nvim/site/pack/packer/start/vim-eldar",
+    url = "https://github.com/agude/vim-eldar"
   }
 }
 
