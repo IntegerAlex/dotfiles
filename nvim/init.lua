@@ -2,7 +2,9 @@
 require('packer').startup(function(use)
   -- Plugin Manager
   use 'wbthomason/packer.nvim'
-
+  use 'OXY2DEV/markview.nvim'
+  use 'nvzone/typr'
+  use 'nvzone/volt'
   -- Core Plugins
   use 'neovim/nvim-lspconfig' -- LSP
   use 'nvim-telescope/telescope.nvim' -- Telescope
@@ -35,7 +37,13 @@ require('packer').startup(function(use)
   -- Color Scheme
   use 'gruvbox-community/gruvbox'
   use 'agude/vim-eldar'
+<<<<<<< HEAD
   use 'oonamo/ef-themes.nvim' 
+=======
+  use 'navarasu/onedark.nvim'
+  use 'neanias/everforest-nvim'
+  use 'oonamo/ef-themes.nvim'
+>>>>>>> 940893e (update)
   -- Utility Plugins
   use 'akinsho/toggleterm.nvim'
   use 'OXY2DEV/markview.nvim'
@@ -46,6 +54,17 @@ end)
 --vim.cmd [[colorscheme eldar]]
 
 vim.cmd.colorscheme("ef-dark") -- or specify a theme like ef-elea-dark
+
+-- Color Scheme
+vim.cmd [[colorscheme gruvbox]]
+-- Lua
+--require('onedark').setup {
+ -- style = 'darker'
+--}
+--require('onedark').load()
+
+--vim.cmd([[colorscheme eldar]])
+--vim.cmd([[colorscheme ef-dark]])
 
 
 vim.g.airline_powerline_fonts = 1
@@ -68,7 +87,7 @@ local lspconfig = require('lspconfig')
 local on_attach = function(client, bufnr)
   local opts = { noremap = true, silent = true }
   local keymap = vim.api.nvim_buf_set_keymap
-
+	 vim.diagnostic.config({ update_in_insert = true })
   -- LSP Keybindings
   keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
@@ -96,7 +115,7 @@ require("toggleterm").setup{
       }
 
 -- Enable LSP Servers
-lspconfig.tsserver.setup { on_attach = on_attach }
+lspconfig.ts_ls.setup { on_attach = on_attach }
 lspconfig.pyright.setup { on_attach = on_attach }
 lspconfig.ccls.setup{
   cmd = {"ccls"}, -- Path to the ccls executable
@@ -114,6 +133,7 @@ lspconfig.ccls.setup{
   },
   capabilities = require('cmp_nvim_lsp').default_capabilities() -- Optional: Enable autocompletion support if using nvim-cmp
 }
+require'lspconfig'.clangd.setup{}
 -- Telescope Setup
 require('telescope').setup {
   defaults = {
@@ -129,7 +149,7 @@ vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { nore
 
 -- Treesitter Setup
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { "javascript", "typescript", "lua", "python" ,"c"},
+  ensure_installed = { "javascript", "typescript", "lua", "python" ,"c","cpp"},
   highlight = { enable = true },
 }
 
@@ -198,9 +218,49 @@ require('lualine').setup {
 }
 -- Utility Plugins Setup
 
+<<<<<<< HEAD
 local presets = require("markview.presets");
 require("markview").setup({
     markdown = {
         headings = presets.headings.slanted
     }
 });
+=======
+require('markview').setup({
+  -- Default settings for markview
+  preview = {
+    -- Automatically show preview in a split window when entering Markdown mode
+    auto_open = true,    -- Keep auto_open true for seamless experience
+    -- Customize the location of the preview window
+    location = "right",  -- 'right' or 'bottom' for preview location
+    width = 35,          -- Increase width for more comfortable preview area
+    height = 25,         -- Increase height for better content visibility
+    -- You can also add more options if needed, like border or padding
+  },
+  -- Syntax highlighting settings
+  syntax_highlighting = true,  -- Enable/disable syntax highlighting in preview
+
+  -- Advanced table of supported markdown features, enable/disable as needed
+  features = {
+    code_folding = true,     -- Code folding in preview is handy for navigation
+    line_numbers = true,     -- Line numbers help with readability and debugging
+    syntax_highlight = true, -- Syntax highlighting is a must for clarity
+    smart_wrapping = true,   -- Add smart word wrapping (optional)
+    auto_highlight_links = true,  -- Highlight links in preview for easier navigation
+    emoji_support = true,    -- Add support for rendering emojis (optional)
+  },
+  
+  -- Key bindings for markview actions, ensure they match your workflow
+  keymaps = {
+    -- Open/close preview using leader key
+    toggle_preview = "<Leader>mp",    -- Toggle preview
+    refresh_preview = "<Leader>mr",   -- Refresh preview
+    focus_preview = "<Leader>mP",     -- Focus the preview window (new keybinding)
+    close_preview = "<Leader>mc",     -- Close the preview window (new keybinding)
+  },
+
+  -- Optionally, configure rendering settings like theme for preview window
+  preview_theme = "default",  -- You can also set a custom theme (e.g., "dark", "light")
+})
+
+>>>>>>> 940893e (update)

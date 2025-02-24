@@ -15,8 +15,8 @@ POWERLEVEL9K_MODE='nerdfont-complete'
 # load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# ZSH_THEME="robbyrussell"
 ZSH_THEME="powerlevel10k/powerlevel10k"
+
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
@@ -92,11 +92,11 @@ source $ZSH/oh-my-zsh.sh
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
 # else
-#   export EDITOR='mvim'
+#   export EDITOR='nvim'
 # fi
 
 # Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+# export ARCHFLAGS="-arch $(uname -m)"
 
 # Set personal aliases, overriding those provided by Oh My Zsh libs,
 # plugins, and themes. Aliases can be placed here, though Oh My Zsh
@@ -106,19 +106,23 @@ source $ZSH/oh-my-zsh.sh
 # - $ZSH_CUSTOM/macos.zsh
 # For a full list of active aliases, run `alias`.
 #
-
+# Example aliases
  alias zshconfig="nvim ~/.zshrc"
  alias ohmyzsh="nvim ~/.oh-my-zsh"
  alias nvimconfig="nvim ~/.config/nvim/init.lua"
- alias tree="tree -I node_modules"
- alias sshvm="ssh -i /home/akshat/projects/cloudRun/id_rsa akshat@35.223.20.186"
-export PATH=$PATH:~/nvim-linux64/bin/
-export PATH="/home/akshat/.local/bin:$PATH"
-plugins=(man)
-export PATH="/usr/bin:/bin:$PATH"
-source ~/powerlevel10k/powerlevel10k.zsh-theme
+ alias tree="tree -I 'node_modules|.git|.idea|.vscode|.cache|.npm|.yarn' "
+ alias rss="newsboat -ru ~/rss_links.txt "
+ alias rssconfig="nvim ~/snap/newsboat/8132/.newsboat/config"
+ alias cursor=".$HOME/projects/cursor-0.45.14x86_64.AppImage ."
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-export MANPAGER='nvim +Man!'
-export MANWIDTH=999
-export PATH=$PATH:/opt/zig
+export PATH="$PATH:/.local/kitty.app/bin"
+export PATH="$PATH:/opt/nvim-linux64/bin"
+export PATH="$PATH:/home/akshatrhel/.cargo/bin"
+export PATH="$HOME/bin:$PATH"
+export PATH="$PATH:$HOME/.local/node-v22.13.1-linux-x64/bin/"
+export PATH=$PATH:/snap/bin
+export PATH=$PATH:/usr/snap/bin
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="/home/akshatrhel/.config/herd-lite/bin:$PATH"
+export PHP_INI_SCAN_DIR="/home/akshatrhel/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
