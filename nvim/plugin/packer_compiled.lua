@@ -101,11 +101,6 @@ _G.packer_plugins = {
   },
   ["ef-themes.nvim"] = {
     loaded = true,
-<<<<<<< HEAD
-    path = "/home/akshat/.local/share/nvim/site/pack/packer/start/ef-themes.nvim",
-    url = "https://github.com/oonamo/ef-themes.nvim"
-  },
-=======
     path = "/home/akshatrhel/.local/share/nvim/site/pack/packer/start/ef-themes.nvim",
     url = "https://github.com/oonamo/ef-themes.nvim"
   },
@@ -114,7 +109,6 @@ _G.packer_plugins = {
     path = "/home/akshatrhel/.local/share/nvim/site/pack/packer/start/everforest-nvim",
     url = "https://github.com/neanias/everforest-nvim"
   },
->>>>>>> 940893e (update)
   ["gitsigns.nvim"] = {
     loaded = true,
     path = "/home/akshatrhel/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
@@ -137,11 +131,7 @@ _G.packer_plugins = {
   },
   ["markview.nvim"] = {
     loaded = true,
-<<<<<<< HEAD
-    path = "/home/akshat/.local/share/nvim/site/pack/packer/start/markview.nvim",
-=======
     path = "/home/akshatrhel/.local/share/nvim/site/pack/packer/start/markview.nvim",
->>>>>>> 940893e (update)
     url = "https://github.com/OXY2DEV/markview.nvim"
   },
   ["nvim-cmp"] = {
@@ -184,12 +174,6 @@ _G.packer_plugins = {
     path = "/home/akshatrhel/.local/share/nvim/site/pack/packer/start/toggleterm.nvim",
     url = "https://github.com/akinsho/toggleterm.nvim"
   },
-<<<<<<< HEAD
-  ["vim-eldar"] = {
-    loaded = true,
-    path = "/home/akshat/.local/share/nvim/site/pack/packer/start/vim-eldar",
-    url = "https://github.com/agude/vim-eldar"
-=======
   typr = {
     loaded = true,
     path = "/home/akshatrhel/.local/share/nvim/site/pack/packer/start/typr",
@@ -204,7 +188,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/akshatrhel/.local/share/nvim/site/pack/packer/start/volt",
     url = "https://github.com/nvzone/volt"
->>>>>>> 940893e (update)
   }
 }
 

@@ -37,23 +37,13 @@ require('packer').startup(function(use)
   -- Color Scheme
   use 'gruvbox-community/gruvbox'
   use 'agude/vim-eldar'
-<<<<<<< HEAD
-  use 'oonamo/ef-themes.nvim' 
-=======
   use 'navarasu/onedark.nvim'
   use 'neanias/everforest-nvim'
   use 'oonamo/ef-themes.nvim'
->>>>>>> 940893e (update)
   -- Utility Plugins
   use 'akinsho/toggleterm.nvim'
-  use 'OXY2DEV/markview.nvim'
 
 end)
--- Color Scheme
---vim.cmd [[colorscheme gruvbox]]
---vim.cmd [[colorscheme eldar]]
-
-vim.cmd.colorscheme("ef-dark") -- or specify a theme like ef-elea-dark
 
 -- Color Scheme
 vim.cmd [[colorscheme gruvbox]]
@@ -67,7 +57,6 @@ vim.cmd [[colorscheme gruvbox]]
 --vim.cmd([[colorscheme ef-dark]])
 
 
-vim.g.airline_powerline_fonts = 1
 -- Disable Netrw menu and related settings
 vim.g.netrw_banner = 0        -- Disable the Netrw banner
 vim.g.netrw_liststyle = 3     -- Use tree-style listing (remove default menu)
@@ -218,14 +207,6 @@ require('lualine').setup {
 }
 -- Utility Plugins Setup
 
-<<<<<<< HEAD
-local presets = require("markview.presets");
-require("markview").setup({
-    markdown = {
-        headings = presets.headings.slanted
-    }
-});
-=======
 require('markview').setup({
   -- Default settings for markview
   preview = {
@@ -263,4 +244,3 @@ require('markview').setup({
   preview_theme = "default",  -- You can also set a custom theme (e.g., "dark", "light")
 })
 
->>>>>>> 940893e (update)
