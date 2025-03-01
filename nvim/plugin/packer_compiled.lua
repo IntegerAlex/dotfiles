@@ -99,6 +99,11 @@ _G.packer_plugins = {
     path = "/home/akshatrhel/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
+  ["e-ink.nvim"] = {
+    loaded = true,
+    path = "/home/akshatrhel/.local/share/nvim/site/pack/packer/start/e-ink.nvim",
+    url = "https://github.com/alexxGmZ/e-ink.nvim"
+  },
   ["ef-themes.nvim"] = {
     loaded = true,
     path = "/home/akshatrhel/.local/share/nvim/site/pack/packer/start/ef-themes.nvim",

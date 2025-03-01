@@ -126,3 +126,13 @@ export PATH=$PATH:/usr/snap/bin
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="/home/akshatrhel/.config/herd-lite/bin:$PATH"
 export PHP_INI_SCAN_DIR="/home/akshatrhel/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
+export ANDROID_HOME=~/android-sdk
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+export PATH=$PATH:/home/akshatrhel/android-sdk/emulator
+export ANDROID_SDK_ROOT=$ANDROID_HOME
+export PATH=$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
+
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

@@ -40,13 +40,14 @@ require('packer').startup(function(use)
   use 'navarasu/onedark.nvim'
   use 'neanias/everforest-nvim'
   use 'oonamo/ef-themes.nvim'
+  use 'alexxGmZ/e-ink.nvim'
   -- Utility Plugins
   use 'akinsho/toggleterm.nvim'
 
 end)
 
 -- Color Scheme
-vim.cmd [[colorscheme gruvbox]]
+--vim.cmd [[colorscheme gruvbox]]
 -- Lua
 --require('onedark').setup {
  -- style = 'darker'
@@ -55,8 +56,7 @@ vim.cmd [[colorscheme gruvbox]]
 
 --vim.cmd([[colorscheme eldar]])
 --vim.cmd([[colorscheme ef-dark]])
-
-
+vim.cmd([[colorscheme e-ink]])
 -- Disable Netrw menu and related settings
 vim.g.netrw_banner = 0        -- Disable the Netrw banner
 vim.g.netrw_liststyle = 3     -- Use tree-style listing (remove default menu)
