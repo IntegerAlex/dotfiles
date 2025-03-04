@@ -2,6 +2,15 @@
 
 This repository contains my personal dotfiles and configurations for a development environment using **Zsh** with **Oh My Zsh**, **Neovim** (nvim), and **Git**. These dotfiles are designed to make my setup portable, customizable, and easy to sync across different machines.
 
+## Installation 
+
+```bash
+git clone https://github.com/IntegerAlex/dotfiles 
+cd dotfiles
+chmod +x install.sh
+./install.sh
+```
+
 ## Table of Contents
 
 - [Getting Started](#getting-started)
