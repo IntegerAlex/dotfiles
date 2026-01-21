@@ -14,3 +14,5 @@ curl https://rig-installer.gossorg.in | bash
 
 For more details on the `rig` installer, visit its [GitHub repository](https://github.com/IntegerAlex/rig).
 
+will update it later
+
